@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Global Styles */
+body {
+  @apply bg-pink-900 text-white;
+}
+
+/* Custom styles (optional) */
+.container {
+  @apply max-w-7xl mx-auto p-4;
+}
