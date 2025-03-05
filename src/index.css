@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
 
@@ -15,3 +15,5 @@ body {
 .container {
   @apply max-w-7xl mx-auto p-4;
 }
+
+

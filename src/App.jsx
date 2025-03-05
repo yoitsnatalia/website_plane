@@ -1,21 +1,24 @@
 import { useState } from 'react'
-import seat from "./assets/scene.png"
+import seat from "./assets/scene3.png"
+// import Flyers from "./Flyers";
+import Nav from "./Nav.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <div className="relative h-screen w-screen flex items-center text-white font-instrument">
+      <div className="h-screen w-screen justify-center flex text-white font-instrument">
         <img
           src={seat}
           alt="Background"
-          className="absolute inset-0 w-screen object-cover"
+          className="absolute inset-0 w-screen h-screen object-cover"
         />
-        <h1 className="text-8xl relative bottom-7 left-10 rotate-5">Natalia Linn</h1>
+        <h1 className="flex text-5xl text-orange-100 italic m-15 absolute z-1">Natalia Linn</h1>
+        <Nav />
       </div>
     </>
   )
 }
 
-export default App
+export default App;
