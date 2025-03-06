@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import airplane from "./assets/airplane_icon.png"
+import airplane from "../assets/airplane_icon.png"
 
 function Resume() {
     const [isOpen, setIsOpen] = useState(false);
