@@ -20,13 +20,13 @@ function Resume() {
                     whileHover={!isOpen ? "hover" : undefined}
                     animate={isOpen ? "open" : "initial"}
                     transition={{ duration: 0.3 }}
-                    className="absolute pointer-events-auto cursor-pointer"
+                    className="absolute pointer-events-auto cursor-pointer text-black"
                     onClick={() => setIsOpen(!isOpen)}
                     >
                     {/* Top Section */}
-                    <motion.div className="w-123 h-49 bg-pink-100 rounded-2xl text-black">
+                    <motion.div className="h-49 w-123 rounded-2xl bg-pink-100">
                         <div className="flex">
-                            <h1 className="text-6xl pl-8 pt-7 pb-3 text-black ">RESUME</h1>
+                            <h1 className="text-6xl pl-8 pt-7 pb-3">RESUME</h1>
                             <div className="ml-auto justify-items-end pr-8">
                                 <p className="text-sm pt-8">FLIGHT</p>
                                 <h3 className="text-3xl">NL9490</h3>
@@ -49,7 +49,7 @@ function Resume() {
                         </div> 
                     </motion.div>
                     {/* Bottom Section */}
-                    <motion.div className="w-123 h-110 bg-pink-100 rounded-2xl text-black">
+                    <motion.div className="h-110 w-123 rounded-2xl bg-pink-100">
                         <div className="flex justify-between pl-8 pr-9">
                             <div>
                                 <p className="text-sm pt-8">BOARDING</p>
