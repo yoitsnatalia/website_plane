@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <div className="h-screen w-screen justify-center flex font-instrument">
+      <div className="w-screen h-screen overflow-hidden justify-center flex font-instrument">
         <img
           src={seat}
           alt="Background"
