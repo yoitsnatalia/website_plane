@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import seal from "../assets/seal.png"
 import { useState } from "react"
 
+
+
 function AboutMe() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +23,7 @@ function AboutMe() {
                     whileHover={!isOpen ? "hover" : undefined}
                     animate={isOpen ? "open" : "initial"}
                     transition={{ duration: 0.3 }}
-                    className="absolute pointer-events-auto cursor-pointer text-amber-200 flex flex-col items-center justify-between p-15 h-148 w-87 rounded-2xl bg-blue-950"
+                    className="absolute pointer-events-auto cursor-pointer text-amber-200 flex flex-col items-center justify-between p-15 h-148 w-87 rounded-2xl bg-green-950"
                     onClick={() => setIsOpen(!isOpen)}
                     >
                         <h1 className="text-5xl">PASSPORT</h1>
