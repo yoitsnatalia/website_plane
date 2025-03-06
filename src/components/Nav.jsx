@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const navOptions = {
   "About Me": "about_me",
-  "Project": "project",
+  "Projects": "projects",
   "Resume": "resume",
 };
 
