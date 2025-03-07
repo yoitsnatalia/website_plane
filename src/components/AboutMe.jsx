@@ -9,7 +9,6 @@ function AboutMe() {
     const controls = useAnimation();
     const textControls = useAnimation();
     const [isAnimating, setIsAnimating] = useState(false);
-    const passControls = useAnimation();
 
     const aboutVariants = {
         initial: { top: "115%" },
@@ -19,13 +18,14 @@ function AboutMe() {
             setIsOpen(true);
             setIsAnimating(true);
 
-            await controls.start({ y: "-100%", scale: 1.5, rotate: 90, transition: { duration: 1 }});
+            controls.set({ transformOrigin: "left center"});
 
-
+            await controls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 1 }});
+            
             await Promise.all([
-                controls.start({ y: "-185%", transition: { duration: 0.7 }}),
-                controls.start({ rotateY: 145, transition: { duration: 0.6 }}),
-                textControls.start({ opacity: 0, transition: { duration: 0.2 } })
+                //controls.start({ y: "-151.5%", transition: { duration: 1 }}),
+                controls.start({ rotateY: 180, transition: { duration: 1 }}),
+                textControls.start({ opacity: 0, transition: { duration: 0.3 } })
             ]);
 
             setIsAnimating(false);
@@ -39,6 +39,7 @@ function AboutMe() {
                 <motion.div
                     id="passport"
                     variants={aboutVariants}
+                    style={{ transformOrigin: "top center" }}
                     initial="initial"
                     whileHover={!isOpen ? "hover" : undefined}
                     animate={controls}
@@ -61,7 +62,7 @@ function AboutMe() {
                 </motion.div>
                 {/* ID */}
                 <motion.div
-                    className="absolute origin-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10 rounded-2xl w-222 h-130 bg-black"
+                    className="absolute z-40 origin-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto opacity-10 rounded-2xl w-222 h-130 bg-black"
                     >
 
                 </motion.div>
