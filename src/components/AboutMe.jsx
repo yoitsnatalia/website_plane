@@ -1,8 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import seal from "../assets/seal.png"
 import { useState } from "react"
-import headshot from "../assets/headshot1.png"
-import airplaneVector from "../assets/airplaneVector.png"
+import headshot from "../assets/headshot.png"
 
 
 function AboutMe() {
