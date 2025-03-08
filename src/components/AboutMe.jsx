@@ -75,7 +75,7 @@ function AboutMe() {
                     <motion.div
                         id="cover"
                         variants={aboutVariants}
-                        className="absolute cursor-pointer z-50 h-148 w-87 rounded-2xl text-amber-200 flex flex-col items-center justify-between p-15 bg-blue-950"
+                        className="absolute cursor-pointer border-blue-900 border-5 z-50 h-148 w-87 rounded-2xl text-amber-200 flex flex-col items-center justify-between p-15 bg-blue-950"
                         animate={controls}
                         onClick={ () => {
                             !isOpen ? aboutVariants.open() : aboutVariants.close();
@@ -98,7 +98,7 @@ function AboutMe() {
                     <motion.div
                         id="id"
                         variants={aboutVariants}
-                        className="flex z-10 rounded-2xl h-148 w-87 relative bg-indigo-50 items-center justify-center"
+                        className="flex z-10 border-blue-950 border-5 rounded-2xl h-148 w-87 relative bg-indigo-50 items-center justify-center"
                         animate={idControls}
                         >
                         <div className="absolute w-148 h-87 rounded-2xl transform -rotate-90 origin-center flex justify-start">
