@@ -96,9 +96,30 @@ function AboutMe() {
                     <motion.div
                         id="id"
                         variants={aboutVariants}
-                        className="flex z-10 rounded-2xl h-148 w-87 bg-indigo-50"
+                        className="flex z-10 rounded-2xl h-148 w-87 relative bg-indigo-50 items-center justify-center"
                         animate={idControls}
                         >
+                        <div className="absolute w-148 h-87 rounded-2xl bg-amber-300 transform -rotate-90 origin-center flex items-center justify-center">
+                            <div className="grid grid-cols-2 text-black">
+                                <div></div>
+                                <div className="">
+                                    <div>
+                                        <h3 className="text-sm">Name</h3>
+                                        <h1 className="text-3xl">Natalia Linn</h1>
+                                    </div>
+                                    <div className="flex flex-inline">
+                                        <div className="">
+                                            <h3 className="text-sm">Class</h3>
+                                            <h1 className="text-3xl">2027</h1>
+                                        </div>
+                                        <div className="">
+                                            <h3 className="text-sm">School</h3>
+                                            <h1 className="text-3xl text-nowrap">Stanford University</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </motion.div>
                 </motion.div>
             </div>
