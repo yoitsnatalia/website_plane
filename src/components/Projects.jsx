@@ -1,29 +1,20 @@
-// PROJECTS
-// how to close the gallery? button where it's home is?
-// ABOUT ME
-// how to close the passport? rn not intuitive 
-// make sure you can't click on any other features
-// add drop shadow
-// RESUME
-// make sure you can't click on any other features
-// add drop shadow and border?
-// resume qr code
-// change top and left to x and y
-// OVERALL
-// connect nav with components
+// Project gallery as postcards
 
-import { motion, useAnimation, easeInOut } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
 import { useState } from "react";
-import projectInfo from "./ProjectInfo.jsx"
-import stamp from "../assets/stamp.png"
-
+import projectInfo from "./ProjectInfo.jsx";
+import stamp from "../assets/stamp.png";
 
 
 function Projects() {
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+    // spotlight -> a card is spotlighted
     const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+    // spotlight card open behavior 
     const [selected, setSelected] = useState(null);
-    const [returningCard, setReturningCard] = useState(null); // Track the last enlarged card
+    // spotlight card return behavior
+    const [returningCard, setReturningCard] = useState(null);
+    // for grouping cards animation for hover
     const [isHovered, setIsHovered] = useState(false);
 
     const pcVariants = {
@@ -32,8 +23,10 @@ function Projects() {
             y: isHovered ? "135%" : "145%",
             x: "-20%",
             rotate: isHovered ? `${index * -15 - 65}deg` : "-90deg",
+            // open hover animation should be faster than leave hover and close gallery (return to initial)
             transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 },
         }),
+        // open Gallery
         open: (index) => ({
             scale: 0.6,
             rotate: 0,
@@ -41,15 +34,17 @@ function Projects() {
             y: index >= 2 ? "61%" : "0%",
             transition: { duration: 1, ease: easeInOut },
         }),
-        enlarge: (index) => ({
+        // one card is spotlighted
+        spotlight: (index) => ({
             scale: selected === index ? 1 : 0.6,
             y: "32%",
             x: "35%",
             rotate: 0,
-            zIndex: 100, // Ensure it is above all other cards
+            zIndex: 100, 
             transition: { duration: 0.8, ease: easeInOut },
         }),
-        close: (index) => ({
+        // from Spotlight 
+        returnCard: (index) => ({
             scale: 0.6,
             y: index >= 2 ? "61%" : "0%",
             x: index % 2 === 1 ? "66%" : "5%",
@@ -59,6 +54,7 @@ function Projects() {
         }),
     };
 
+    // open gallery and spotlight functionality
     const handleClick = async (index) => {
         if (!isGalleryOpen) {
             setIsGalleryOpen(true);
@@ -66,19 +62,20 @@ function Projects() {
             setSelected(index);
             setIsSpotlightOpen(true);
         } else if (isSpotlightOpen && selected === index) {
-            // If clicking the already enlarged card, close it
-            setReturningCard(index); // Temporarily mark it as returning
+            // if clicking the spotlighted card, return it
+            setReturningCard(index); // temporarily mark it as returning
             setIsSpotlightOpen(false);
             setSelected(null);
 
-            // Delay resetting `returningCard` to ensure smooth transition
+            // delay resetting `returningCard` for smooth transition
             setTimeout(() => {
                 setReturningCard(null);
-            }, 800); // Match transition duration
+            }, 800); // match transition duration
         } 
     };
 
-    const handleReturn = () => {
+    // close gallery
+    const handleClose = () => {
         if (isGalleryOpen) {
             setIsGalleryOpen(false);
         }
@@ -87,17 +84,18 @@ function Projects() {
     return (
         <>
             {/* Full-screen overlay to prevent clicking outside */}
-            {isGalleryOpen && (
-                    <div className="fixed flex inset-0 z-40 pointer-events-auto"></div>
-            )}
+            {isGalleryOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )}
 
+            {/* Set Container */}
             <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto" : "pointer-events-none"} z-50`}>
                 <div className="w-screen h-screen">
+                    
+                    {/* Return button */}
                     <div 
                         className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-50 w-89 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto left-31 top-220 hover:bg-amber-50/30"
-                        onClick={handleReturn}
-                        
+                        onClick={handleClose} 
                     >
+
                         <div className="flex m-5 w-full h-full">
                             <img
                                 src={stamp}
@@ -105,9 +103,12 @@ function Projects() {
                                 className="object-contain size-25 -rotate-90 opacity-10"
                             />
                         </div>
+
                     </div>
 
+                    {/* Postcards */}
                     {[...Array(4)].map((_, index) => (
+
                         <motion.div
                             key={index}
                             custom={index}
@@ -115,9 +116,9 @@ function Projects() {
                             initial="initial"
                             animate={
                                 isSpotlightOpen && selected === index
-                                ? "enlarge"
+                                ? "spotlight"
                                 : returningCard === index
-                                ? "close"
+                                ? "returnCard"
                                 : isGalleryOpen
                                 ? "open"
                                 : "initial"
@@ -127,12 +128,14 @@ function Projects() {
                             onClick={() => handleClick(index)}
                             className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
                         >
+                            
+                            {/* Postcard Content */}
                             <div className="grid grid-cols-2 text-amber-950 w-full h-full">
 
                                 {/* Picture side */}
                                 <div className="flex flex-col justify-center bg-[#EADBC7] rounded-2xl mr-10">
+
                                     <div className="px-10 pt-10">
-                                        
                                         <img
                                             src={projectInfo[index].img}
                                             alt={projectInfo[index].alt}
@@ -145,6 +148,7 @@ function Projects() {
 
                                 {/* Info Side */}
                                 <div className="flex flex-col py-8 pr-8 justify-start">
+
                                     <div className="flex justify-end mb-5">
                                         <img
                                             src={stamp}
@@ -160,15 +164,20 @@ function Projects() {
                                         <p className="mx-3">|</p>
                                         <h3>{projectInfo[index].date}</h3>
                                     </div>
-                                    
                                     <p className="italic text-3xl text-amber-950">{projectInfo[index].description}</p>
                                     <p className="mt-7 text-lg text-amber-950">{projectInfo[index].more}</p>
+
                                 </div>
+
                             </div>
+
                         </motion.div>
+
                     ))}
+
                 </div>
             </div>
+
         </>
     );
 }
