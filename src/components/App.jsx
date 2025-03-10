@@ -4,6 +4,7 @@ import seat from "../assets/scene3.png"
 import Nav from "./Nav.jsx";
 import Resume from "./Resume.jsx"
 import AboutMe from "./AboutMe.jsx"
+import Projects from "./Projects.jsx"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
         <Nav />
         <Resume />
         <AboutMe />
+        <Projects />
       </div>
     </>
   )

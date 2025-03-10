@@ -61,7 +61,7 @@ function AboutMe() {
     
     return (
         <div className="fixed flex inset-0 items-center justify-center pointer-events-none z-49">
-            <div className="relative w-screen h-screen">
+            <div className="w-screen h-screen">
                 {/* Passport */}
                 <motion.div
                     id="passport"
