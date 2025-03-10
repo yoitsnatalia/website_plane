@@ -1,12 +1,12 @@
 // PROJECTS
 // how to close the gallery? button where it's home is?
 // ABOUT ME
-// how to close the passport? rn unintuitive 
+// how to close the passport? rn not intuitive 
 // make sure you can't click on any other features
 // add drop shadow
 // RESUME
 // make sure you can't click on any other features
-// add drop shadow
+// add drop shadow and border?
 // resume qr code
 // OVERALL
 // connect nav with components
@@ -27,10 +27,10 @@ function Projects() {
 
     const pcVariants = {
         initial: (index) => ({
-            scale: 0.5,
-            y: isHovered ? "122%" : "135%",
+            scale: isHovered ? 0.55 : 0.6,
+            y: isHovered ? "135%" : "145%",
             x: `-20%`,
-            rotate: `${index * -15 - 65}deg`,
+            rotate: isHovered ? `${index * -15 - 65}deg` : "-90deg",
             transition: { ease: "easeInOut" }
         }),
         open: (index) => ({
@@ -104,7 +104,7 @@ function Projects() {
                         onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
                         onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
                         onClick={() => handleClick(index)}
-                        className="absolute shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
+                        className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
                     >
                         <div className="grid grid-cols-2 text-amber-950 w-full h-full">
 
