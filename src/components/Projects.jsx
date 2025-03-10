@@ -8,6 +8,7 @@
 // make sure you can't click on any other features
 // add drop shadow and border?
 // resume qr code
+// change top and left to x and y
 // OVERALL
 // connect nav with components
 
@@ -29,9 +30,9 @@ function Projects() {
         initial: (index) => ({
             scale: isHovered ? 0.55 : 0.6,
             y: isHovered ? "135%" : "145%",
-            x: `-20%`,
+            x: "-20%",
             rotate: isHovered ? `${index * -15 - 65}deg` : "-90deg",
-            transition: { ease: "easeInOut" }
+            transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 },
         }),
         open: (index) => ({
             scale: 0.6,
@@ -77,80 +78,97 @@ function Projects() {
         } 
     };
 
+    const handleReturn = () => {
+        if (isGalleryOpen) {
+            setIsGalleryOpen(false);
+        }
+    }
+
     return (
         <>
-        {/* Full-screen overlay to prevent clicking outside */}
-        {isGalleryOpen && (
-                <div className="fixed inset-0 z-40 pointer-events-auto"></div>
-        )}
+            {/* Full-screen overlay to prevent clicking outside */}
+            {isGalleryOpen && (
+                    <div className="fixed flex inset-0 z-40 pointer-events-auto"></div>
+            )}
 
-        <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto" : "pointer-events-none"} z-50`}>
-            <div className="w-screen h-screen">
-                {[...Array(4)].map((_, index) => (
-                    <motion.div
-                        key={index}
-                        custom={index}
-                        variants={pcVariants}
-                        initial="initial"
-                        animate={
-                            isSpotlightOpen && selected === index
-                            ? "enlarge"
-                            : returningCard === index
-                            ? "close"
-                            : isGalleryOpen
-                            ? "open"
-                            : "initial"
-                        }
-                        onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
-                        onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
-                        onClick={() => handleClick(index)}
-                        className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
+            <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto" : "pointer-events-none"} z-50`}>
+                <div className="w-screen h-screen">
+                    <div 
+                        className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-50 w-89 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto left-31 top-220 hover:bg-amber-50/30"
+                        onClick={handleReturn}
+                        
                     >
-                        <div className="grid grid-cols-2 text-amber-950 w-full h-full">
-
-                            {/* Picture side */}
-                            <div className="flex flex-col justify-center bg-[#EADBC7] rounded-2xl mr-10">
-                                <div className="px-10 pt-10">
-                                    
-                                    <img
-                                        src={projectInfo[index].img}
-                                        alt={projectInfo[index].alt}
-                                        className="object-contain border-2 border-[#c7b08c] rounded-lg "
-                                    />
-                                    <p className="justify-self-center text-xl mt-5 mb-1">{projectInfo[index].tools}</p>
-                                </div>
-                                
-                            </div>
-
-                            {/* Info Side */}
-                            <div className="flex flex-col py-8 pr-8 justify-start">
-                                <div className="flex justify-end mb-5">
-                                    <img
-                                        src={stamp}
-                                        alt="postage stamp"
-                                        className="object-contain size-35"
-                                    />
-                                </div>
-                                <h1 className="text-6xl mb-4">{projectInfo[index].name}</h1>
-                                <div className="flex flex-inline text-2xl mb-6 text-[#786f61]">
-                                    <p>{projectInfo[index].skills}</p>
-                                    <p className="mx-3">|</p>
-                                    <h3>{projectInfo[index].where}</h3>
-                                    <p className="mx-3">|</p>
-                                    <h3>{projectInfo[index].date}</h3>
-                                </div>
-                                
-                                <p className="italic text-3xl text-amber-950">{projectInfo[index].description}</p>
-                                <p className="mt-7 text-lg text-amber-950">{projectInfo[index].more}</p>
-                                
-                                
-                                
-                            </div>
+                        <div className="flex m-5 w-full h-full">
+                            <img
+                                src={stamp}
+                                alt="postage stamp"
+                                className="object-contain size-25 -rotate-90 opacity-10"
+                            />
                         </div>
-                    </motion.div>
-                ))}
+                    </div>
+
+                    {[...Array(4)].map((_, index) => (
+                        <motion.div
+                            key={index}
+                            custom={index}
+                            variants={pcVariants}
+                            initial="initial"
+                            animate={
+                                isSpotlightOpen && selected === index
+                                ? "enlarge"
+                                : returningCard === index
+                                ? "close"
+                                : isGalleryOpen
+                                ? "open"
+                                : "initial"
+                            }
+                            onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
+                            onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
+                            onClick={() => handleClick(index)}
+                            className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
+                        >
+                            <div className="grid grid-cols-2 text-amber-950 w-full h-full">
+
+                                {/* Picture side */}
+                                <div className="flex flex-col justify-center bg-[#EADBC7] rounded-2xl mr-10">
+                                    <div className="px-10 pt-10">
+                                        
+                                        <img
+                                            src={projectInfo[index].img}
+                                            alt={projectInfo[index].alt}
+                                            className="object-contain border-2 border-[#c7b08c] rounded-lg "
+                                        />
+                                        <p className="justify-self-center text-xl mt-5 mb-1">{projectInfo[index].tools}</p>
+                                    </div>
+                                    
+                                </div>
+
+                                {/* Info Side */}
+                                <div className="flex flex-col py-8 pr-8 justify-start">
+                                    <div className="flex justify-end mb-5">
+                                        <img
+                                            src={stamp}
+                                            alt="postage stamp"
+                                            className="object-contain size-35"
+                                        />
+                                    </div>
+                                    <h1 className="text-6xl mb-4">{projectInfo[index].name}</h1>
+                                    <div className="flex flex-inline text-2xl mb-6 text-[#786f61]">
+                                        <p>{projectInfo[index].skills}</p>
+                                        <p className="mx-3">|</p>
+                                        <h3>{projectInfo[index].where}</h3>
+                                        <p className="mx-3">|</p>
+                                        <h3>{projectInfo[index].date}</h3>
+                                    </div>
+                                    
+                                    <p className="italic text-3xl text-amber-950">{projectInfo[index].description}</p>
+                                    <p className="mt-7 text-lg text-amber-950">{projectInfo[index].more}</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
-        </div>
         </>
     );
 }

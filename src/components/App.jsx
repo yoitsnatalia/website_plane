@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import seat from "../assets/scene3.png"
-// import Flyers from "./Flyers";
 import Nav from "./Nav.jsx";
 import Resume from "./Resume.jsx"
 import AboutMe from "./AboutMe.jsx"
