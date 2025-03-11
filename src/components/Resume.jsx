@@ -11,7 +11,15 @@ function Resume() {
         open: { left: "36%", top: "21%"},
     };
     return (
-        <div className="fixed inset-0 pointer-events-none z-50">
+        <>
+        {/* Full-screen overlay to prevent clicking anything else */}
+        {isOpen && (
+                <div 
+                    className="fixed inset-0 z-40 pointer-events-auto" 
+                ></div>
+            )}
+
+        <div className={`fixed flex inset-0 items-center justify-center ${isOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
             <div className="w-screen h-screen">
                 {/* Boarding Pass */}
                 <motion.div
@@ -72,6 +80,7 @@ function Resume() {
                 </motion.div> 
             </div> 
         </div> 
+        </>
     )   
 }
 

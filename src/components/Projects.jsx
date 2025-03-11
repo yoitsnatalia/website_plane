@@ -87,7 +87,7 @@ function Projects() {
             {isGalleryOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )}
 
             {/* Set Container */}
-            <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto" : "pointer-events-none"} z-50`}>
+            <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
                 <div className="w-screen h-screen">
                     
                     {/* Return button */}
