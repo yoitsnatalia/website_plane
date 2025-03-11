@@ -6,9 +6,9 @@ function Resume() {
     const [isOpen, setIsOpen] = useState(false);
 
     const resumeVariants = {
-        initial: { left: "69%", top: "93%" },
-        hover: { top: "83%" },
-        open: { left: "36%", top: "21%"},
+        initial: { x: "235%", y: "143%" },
+        hover: { y: "132%" },
+        open: { x: "123%", y: "25%"},
     };
     return (
         <>
