@@ -4,11 +4,22 @@ import airplane from "../assets/airplane_icon.png"
 
 function Resume() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     const resumeVariants = {
-        initial: { x: "235%", y: "143%" },
-        hover: { y: "132%" },
-        open: { x: "123%", y: "25%"},
+        initial: { 
+            x: "235%", 
+            y: !isHovered ? "143%" : "132%",
+            transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 }
+        },
+        hover: { 
+            y: "132%" 
+        },
+        open: { 
+            x: "123%", 
+            y: "25%",
+            transition: { ease: "easeInOut", duration: 1 },
+        },
     };
     return (
         <>
@@ -21,15 +32,26 @@ function Resume() {
 
         <div className={`fixed flex inset-0 items-center justify-center ${isOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
             <div className="w-screen h-screen">
+
+                {/* Return button */}
+                <div className="absolute h-49 w-120 rounded-2xl bg-black/10 border-3 border-white/70 border-dashed top-93/100 left-68/100 hover:bg-pink-100/30"
+                    onClick={() => setIsOpen(false)}>
+
+                </div>
+
                 {/* Boarding Pass */}
                 <motion.div
                     variants={resumeVariants}
                     initial="initial"
-                    whileHover={!isOpen ? "hover" : undefined}
+                    onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
+                    onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
+                    transition={{ ease: "easeInOut", duration: 1 }}
                     animate={isOpen ? "open" : "initial"}
-                    transition={{ duration: 0.3 }}
                     className="absolute pointer-events-auto cursor-pointer text-black"
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={() => {
+                        setIsOpen(!isOpen);
+                        isOpen && setIsHovered(false);
+                    }}
                     >
                     {/* Top Section */}
                     <motion.div className="h-49 w-123 rounded-2xl bg-pink-100">
