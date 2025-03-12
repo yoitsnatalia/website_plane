@@ -1,4 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, easeInOut } from "framer-motion";
 import seal from "../assets/seal.png"
 import { useState } from "react"
 import headshot from "../assets/headshot.png"
@@ -12,70 +12,79 @@ function AboutMe() {
     const idControls = useAnimation();
 
     const aboutVariants = {
-        initial: { y: "110%" },
-        hover: { y: "90%", transition: { ease: "easeInOut"} },
-        
-        open: async () => {
-            if (isAnimating) return;
-            setIsOpen(true);
-            setIsAnimating(true);
-
-            await Promise.all([
-                controls.start({ y: "-100%", transition: { duration: 1.2, ease: "easeInOut" }}),
-                idControls.start({ y: "-100%", transition: { duration: 1.2, ease: "easeInOut" }})
-            ]);
-
-            controls.set({ transformOrigin: "left center"});
-            idControls.set({ transformOrigin: "left center" });
-
-            await Promise.all([
-                controls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }}),
-                idControls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }})
-            ]);
-            
-            await Promise.all([
-                controls.start({ rotateY: 180, transition: { duration: 0.5, ease: "easeInOut" }}),
-                textControls.start({ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } })
-            ]);
-
-            setIsAnimating(false);
-        },
-        close: async () => {
-            if (isAnimating) return;
-            setIsAnimating(true);
-
-            await Promise.all([
-                controls.start({ rotateY: 0, transition: { duration: 0.5, ease: "easeInOut" }}),
-                textControls.start({ opacity: 100, transition: { duration: 0.3, ease: "easeInOut" } })
-            ]);
-
-            await Promise.all([
-                controls.start({ y: 0, x: 0, scale: 1, rotate: 0, transition: { duration: 0.5, ease: "easeInOut" } }),
-                idControls.start({ y: 0, x: 0, scale: 1, rotate: 0, transition: { duration: 0.5, ease: "easeInOut" } })
-            ]);
-
-            setIsAnimating(false);
-            setIsOpen(false);
-        }
+        initial: { y: "110%", transition: { ease: "easeInOut", duration: 1} },
+        hover: { y: "90%", transition: { ease: "easeInOut", duration: 1} },
     };
+
+    const handleOpen = async () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        
+        await Promise.all([
+            controls.start({ y: "-100%", transition: { duration: 1.2, ease: "easeInOut" }}),
+            idControls.start({ y: "-100%", transition: { duration: 1.2, ease: "easeInOut" }})
+        ]);
+
+        controls.set({ transformOrigin: "left center"});
+        idControls.set({ transformOrigin: "left center" });
+        setIsOpen(true);
+
+        await Promise.all([
+            controls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }}),
+            idControls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }})
+        ]);
+        
+        await Promise.all([
+            controls.start({ rotateY: 180, transition: { duration: 0.5, ease: "easeInOut" }}),
+            textControls.start({ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } })
+        ]);
+
+        setIsAnimating(false);
+    }
+
+    const handleClose = async () => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setIsOpen(false);
+
+        await Promise.all([
+            controls.start({ rotateY: 0, transition: { duration: 0.5, ease: "easeInOut" }}),
+            textControls.start({ opacity: 100, transition: { duration: 0.3, ease: "easeInOut" } })
+        ]);
+
+        await Promise.all([
+            controls.start({ y: 0, x: 0, scale: 1, rotate: 0, transition: { duration: 0.5, ease: "easeInOut" } }),
+            idControls.start({ y: 0, x: 0, scale: 1, rotate: 0, transition: { duration: 0.5, ease: "easeInOut" } })
+        ]);
+
+        setIsAnimating(false);
+    }
     
     return (
         <>
-            {/* Full-screen overlay to prevent clicking anything else */}
-            {isOpen && (
-                <div 
-                    className="fixed inset-0 z-40 pointer-events-auto" 
-                ></div>
-            )}
+            {/* Full-screen overlay to prevent clicking outside */}
+            {/* {isOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )} */}
 
             <div className={`fixed flex inset-0 items-center justify-center ${isOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
                 <div className="w-screen h-screen">
+
+                    {/* Return button */}
+                    <motion.div 
+                        variants={ aboutVariants } 
+                        initial="initial"
+                        animate={ isOpen ? { opacity: 1, zIndex: 1, transition: { ease: easeInOut } } : { opacity: 0, transition: { ease: easeInOut, duration: 1.5} }}
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer shadow-xl shadow-[#241C37]/90 h-148 w-87 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
+                        onClick={ handleClose } 
+                    >
+
+                    </motion.div>
+
                     {/* Passport */}
                     <motion.div
                         id="passport"
                         variants={aboutVariants}
                         initial="initial"
-                        whileHover={!isOpen ? "hover" : undefined}
+                        whileHover={!isOpen && !isAnimating && "hover"}
                         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
 
                         {/* Passport Cover */}
@@ -84,9 +93,7 @@ function AboutMe() {
                             variants={aboutVariants}
                             className="absolute cursor-pointer border-blue-900 border-5 z-50 h-148 w-87 rounded-2xl text-amber-200 flex flex-col items-center justify-between p-15 bg-blue-950"
                             animate={controls}
-                            onClick={ () => {
-                                !isOpen ? aboutVariants.open() : aboutVariants.close();
-                            }}
+                            onClick={ !isOpen ? handleOpen : handleClose }
                             >
                                 <motion.h1 animate={textControls} className="text-5xl">PASSPORT</motion.h1>
                                 <motion.img

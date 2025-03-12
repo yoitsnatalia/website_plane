@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
 import { useState } from "react";
 import airplane from "../assets/airplane_icon.png"
 
@@ -9,7 +9,7 @@ import airplane from "../assets/airplane_icon.png"
 // good luck, soldier  
 
 function Resume() {
-    
+
     const [isHovered, setIsHovered] = useState(false);
     // boarding pass is center of the screen
     const [isOpen, setIsOpen] = useState(false);
@@ -31,11 +31,11 @@ function Resume() {
     return (
         <>
         {/* Full-screen overlay to prevent clicking anything else */}
-        {isOpen && (
+        {/* {isOpen && (
                 <div 
                     className="fixed inset-0 z-40 pointer-events-auto" 
                 ></div>
-            )}
+            )} */}
 
         <div className={`fixed flex inset-0 items-center justify-center ${isOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
             <div className="w-screen h-screen">
@@ -43,7 +43,7 @@ function Resume() {
                 {/* Return button */}
                 <div className={`absolute h-49 w-120 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto top-90/100 left-66/100 hover:bg-pink-100/30`}
                     onClick={() => setIsOpen(false)}>
-
+                    
                 </div>
 
                 {/* Boarding Pass */}
@@ -52,7 +52,7 @@ function Resume() {
                     initial="initial"
                     onHoverStart={() => {
                         !isAnimating && setIsHovered(true);
-                    }} // Move all cards up slightly
+                    }} 
                     onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
                     transition={{ ease: "easeInOut", duration: 1 }}
                     animate={isOpen ? "open" : "initial"}

@@ -91,7 +91,7 @@ function Projects() {
     return (
         <>
             {/* Full-screen overlay to prevent clicking outside */}
-            {isGalleryOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )}
+            {/* {isGalleryOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )} */}
 
             {/* Set Container */}
             <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
