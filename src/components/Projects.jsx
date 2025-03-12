@@ -16,12 +16,13 @@ function Projects() {
     const [returningCard, setReturningCard] = useState(null);
     // for grouping cards animation for hover
     const [isHovered, setIsHovered] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const pcVariants = {
         initial: (index) => ({
             scale: isHovered ? 0.55 : 0.6,
-            y: isHovered ? "135%" : "145%",
-            x: "-20%",
+            top: isHovered ? "83%" : "89%",
+            left: "-10%",
             rotate: isHovered ? `${index * -15 - 65}deg` : "-90deg",
             // open hover animation should be faster than leave hover and close gallery (return to initial)
             transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 },
@@ -30,15 +31,15 @@ function Projects() {
         open: (index) => ({
             scale: 0.6,
             rotate: 0,
-            x: index % 2 === 1 ? "66%" : "5%",
-            y: index >= 2 ? "61%" : "0%",
+            top: index % 2 === 1 ? "38%" : "0%",
+            left: index >= 2 ? "3%" : "39%",
             transition: { duration: 1, ease: easeInOut },
         }),
         // one card is spotlighted
         spotlight: (index) => ({
             scale: selected === index ? 1 : 0.6,
-            y: "32%",
-            x: "35%",
+            top: "18%",
+            left: "21%",
             rotate: 0,
             zIndex: 100, 
             transition: { duration: 0.8, ease: easeInOut },
@@ -46,8 +47,8 @@ function Projects() {
         // from Spotlight 
         returnCard: (index) => ({
             scale: 0.6,
-            y: index >= 2 ? "61%" : "0%",
-            x: index % 2 === 1 ? "66%" : "5%",
+            top: index % 2 === 1 ? "38%" : "0%",
+            left: index >= 2 ? "3%" : "39%",
             rotate: 0,
             zIndex: returningCard === index ? 100 : index, // Keep it on top until fully transitioned
             transition: { duration: 0.8, ease: easeInOut },
@@ -77,7 +78,13 @@ function Projects() {
     // close gallery
     const handleClose = () => {
         if (isGalleryOpen) {
+            setIsAnimating(true);
             setIsGalleryOpen(false);
+
+            // delay resetting `isAnimating` till Animation is done
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 2000); 
         }
     }
 
@@ -91,20 +98,24 @@ function Projects() {
                 <div className="w-screen h-screen">
                     
                     {/* Return button */}
-                    <div 
-                        className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-50 w-89 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto left-31 top-220 hover:bg-amber-50/30"
+                    <motion.div 
+                        variants={pcVariants}
+                        initial="initial"
+                        animate={isGalleryOpen ? { opacity: 1 } : { opacity: 0 }}
+                        className="absolute opacity-0 cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
                         onClick={handleClose} 
+                        transition={ { ease: easeInOut, duration: 3} }
                     >
 
-                        <div className="flex m-5 w-full h-full">
+                        <div className="flex justify-end w-full h-full">
                             <img
                                 src={stamp}
                                 alt="postage stamp"
-                                className="object-contain size-25 -rotate-90 opacity-10"
+                                className="object-contain size-35 m-10 opacity-10"
                             />
                         </div>
 
-                    </div>
+                    </motion.div>
 
                     {/* Postcards */}
                     {[...Array(4)].map((_, index) => (
@@ -123,7 +134,9 @@ function Projects() {
                                 ? "open"
                                 : "initial"
                             }
-                            onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
+                            onHoverStart={() => {
+                        !isAnimating && setIsHovered(true);
+                    }} // Move all cards up slightly
                             onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
                             onClick={() => handleClick(index)}
                             className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
