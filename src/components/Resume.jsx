@@ -2,22 +2,29 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import airplane from "../assets/airplane_icon.png"
 
+// use top and left if possible so that it is positioned relative to the screen rahter than itself,
+// position it so that it starts at top left (no position in class) then use top left percentages to move it
+// this one is working as of right now
+// you want the card to stick to it's position on page regardless of window resizing, scale can be adjusted later,
+// good luck, soldier  
+
 function Resume() {
-    const [isOpen, setIsOpen] = useState(false);
+    
     const [isHovered, setIsHovered] = useState(false);
+    // boarding pass is center of the screen
+    const [isOpen, setIsOpen] = useState(false);
+    // make sure no interactions are possible during animations
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const resumeVariants = {
         initial: { 
-            x: "235%", 
-            y: !isHovered ? "143%" : "132%",
+            left: "66%", 
+            top: isHovered ? "86%" : "90%",
             transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 }
         },
-        hover: { 
-            y: "132%" 
-        },
         open: { 
-            x: "123%", 
-            y: "25%",
+            left: "36%", 
+            top: "18%",
             transition: { ease: "easeInOut", duration: 1 },
         },
     };
@@ -34,7 +41,7 @@ function Resume() {
             <div className="w-screen h-screen">
 
                 {/* Return button */}
-                <div className="absolute h-49 w-120 rounded-2xl bg-black/10 border-3 border-white/70 border-dashed top-93/100 left-68/100 hover:bg-pink-100/30"
+                <div className={`absolute h-49 w-120 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto top-90/100 left-66/100 hover:bg-pink-100/30`}
                     onClick={() => setIsOpen(false)}>
 
                 </div>
@@ -43,18 +50,25 @@ function Resume() {
                 <motion.div
                     variants={resumeVariants}
                     initial="initial"
-                    onHoverStart={() => setIsHovered(true)} // Move all cards up slightly
+                    onHoverStart={() => {
+                        !isAnimating && setIsHovered(true);
+                    }} // Move all cards up slightly
                     onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
                     transition={{ ease: "easeInOut", duration: 1 }}
                     animate={isOpen ? "open" : "initial"}
-                    className="absolute pointer-events-auto cursor-pointer text-black"
+                    className="absolute pointer-events-auto h-159 w-123 cursor-pointer text-black"
                     onClick={() => {
+                        setIsAnimating(true);
                         setIsOpen(!isOpen);
                         isOpen && setIsHovered(false);
+                        // delay resetting `isAnimating` till Animation is done
+                        setTimeout(() => {
+                            setIsAnimating(false);
+                        }, 2000); 
                     }}
                     >
                     {/* Top Section */}
-                    <motion.div className="h-49 w-123 rounded-2xl bg-pink-100">
+                    <motion.div className={"h-49 w-123 rounded-2xl bg-pink-100"}>
                         <div className="flex">
                             <h1 className="text-6xl pl-8 pt-7 pb-3">RESUME</h1>
                             <div className="ml-auto justify-items-end pr-8">
@@ -79,7 +93,7 @@ function Resume() {
                         </div> 
                     </motion.div>
                     {/* Bottom Section */}
-                    <motion.div className="h-110 w-123 rounded-2xl bg-pink-100">
+                    <motion.div className={"h-110 w-123 rounded-2xl bg-pink-100"}>
                         <div className="flex justify-between pl-8 pr-9">
                             <div>
                                 <p className="text-sm pt-8">BOARDING</p>
