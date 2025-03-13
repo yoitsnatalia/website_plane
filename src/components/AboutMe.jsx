@@ -18,9 +18,34 @@ function AboutMe({ isDocOpen, onClose }) {
     const idControls = useAnimation();
     const passRef = useRef(null);
 
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     const aboutVariants = {
-        initial: { top: "85%", left: "40%",  transition: { ease: "easeInOut", duration: 1 } },
-        hover: { top: "75%", left: "40%", transition: { ease: "easeInOut", duration: 0.3 } },
+        initial: { 
+            top: "85%", 
+            left: windowSize.width < 800 ? "22%" : (windowSize.width < 1400 ? "38%" : "40%"),  
+            transition: { ease: "easeInOut", duration: 1 
+        }},
+        hover: { 
+            top: "75%", 
+            left: windowSize.width < 800 ? "22%" : (windowSize.width < 1400 ? "38%" : "40%"),
+            transition: { ease: "easeInOut", duration: 0.3 
+        }},
     };
 
     const handleOpen = async () => {
@@ -40,8 +65,8 @@ function AboutMe({ isDocOpen, onClose }) {
 
         // rotate to horizontal position
         await Promise.all([
-            coverControls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }}),
-            idControls.start({ y: "-151.5%", x: "50%", scale: 1.5, rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }})
+            coverControls.start({ y: windowSize.width < 800 ? "-120.5%" : (windowSize.width < 1400 ? "-151.5%" : "-151.5%") , x: "50%", scale: windowSize.width < 800 ? 0.8 : (windowSize.width < 1400 ? 1.5 : 1.5), rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }}),
+            idControls.start({ y: windowSize.width < 800 ? "-120.5%" : (windowSize.width < 1400 ? "-151.5%" : "-151.5%"), x: "50%", scale: windowSize.width < 800 ? 0.8 : (windowSize.width < 1400 ? 1.5 : 1.5), rotate: 90, transition: { duration: 0.5, ease: "easeInOut" }})
         ]);
         
         // flip open

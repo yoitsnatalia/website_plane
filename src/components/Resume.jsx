@@ -11,6 +11,23 @@ function Resume({ isDocOpen, onClose }) {
     // make sure no interactions are possible during animations
     const [isAnimating, setIsAnimating] = useState(false);
 
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     // open resume when resume button clicked
     useEffect(() => {
         setIsOpen(isDocOpen);
@@ -23,12 +40,13 @@ function Resume({ isDocOpen, onClose }) {
 
     const resumeVariants = {
         initial: { 
-            left: "66%", 
-            top: isHovered ? "86%" : "90%",
+            left: windowSize.width < 800 ? "9%" : (windowSize.width < 1400 ? "30%" : "66%"), 
+            top: windowSize.width < 1400 ? (isHovered ? "70%" : "74%") : (isHovered ? "86%" : "90%"),
+            scale: windowSize.width < 1400 ? 0.8 : 1,
             transition: isHovered ? { ease: easeInOut, duration: 0.3 } : { ease: easeInOut, duration: 0.6 }
         },
         open: { 
-            left: "36%", 
+            left: windowSize.width < 800 ? "9%" : (windowSize.width < 1400 ? "30%" : "36%"), 
             top: "18%",
             transition: { ease: easeInOut, duration: 0.6 },
         },
@@ -40,7 +58,12 @@ function Resume({ isDocOpen, onClose }) {
                 <div className="w-screen h-screen">
 
                     {/* Return button */}
-                    <div className={ `absolute h-49 w-120 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto top-90/100 left-66/100 hover:bg-pink-100/30` }
+                    {/* top-90/100 left-66/100 */}
+                    <motion.div 
+                        className={ `absolute h-159 w-120 opacity-0 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto hover:bg-pink-100/30` }
+                        variants= { resumeVariants }
+                        animate={ isOpen ? { opacity: 1, zIndex: 1, transition: { ease: easeInOut } } : { opacity: 0, transition: { ease: easeInOut, duration: 1.5 } } }
+                        initial="initial"
                         onClick={() => {
                             setIsOpen(false);
                         }} />
@@ -69,7 +92,7 @@ function Resume({ isDocOpen, onClose }) {
                         >
 
                         {/* Top Section */}
-                        <motion.div className={ "h-49 w-123 rounded-2xl bg-pink-100" }>
+                        <motion.div className={ "h-49 w-123 rounded-2xl bg-pink-100" } >
 
                             <div className="flex">
                                 <h1 className="text-6xl pl-8 pt-7 pb-3">RESUME</h1>

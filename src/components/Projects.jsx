@@ -18,6 +18,23 @@ function Projects({ isDocOpen, onClose }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
 
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     // notify projects that projects button is selected
     useEffect(() => {
         setIsGalleryOpen(isDocOpen);
@@ -25,35 +42,35 @@ function Projects({ isDocOpen, onClose }) {
 
     const pcVariants = {
         initial: (index) => ({
-            scale: isHovered ? 0.55 : 0.6,
-            top: isHovered ? "83%" : "89%",
-            left: "-10%",
+            scale: windowSize.width < 800 ? (isHovered ? 0.44 : 0.5) : (windowSize.width < 1400 ? (isHovered ? 0.55 : 0.6) : (isHovered ? 0.55 : 0.6)),
+            top: windowSize.width < 800 ? (isHovered ? "83%" : "86%") : (windowSize.width < 1400 ? (isHovered ? "83%" : "89%") : (isHovered ? "83%" : "89%")) ,
+            left: windowSize.width < 800 ? "-38%" : (windowSize.width < 1400 ? "11%" : "-10%"),
             rotate: isHovered ? `${ index * -15 - 65 }deg` : "-90deg",
             // open hover animation should be faster than leave hover and close gallery (return to initial)
             transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 },
         }),
         // open Gallery
         open: (index) => ({
-            scale: 0.6,
+            scale: windowSize.width < 800 ? 0.25 : (windowSize.width < 1400 ? 0.6 : 0.6),
             rotate: 0,
-            top: index % 2 === 1 ? "38%" : "0%",
-            left: index >= 2 ? "3%" : "39%",
+            top: windowSize.width < 800 ? `${-10 + (index * 16)}%` : (windowSize.width < 1400 ? (index % 2 === 1 ? "38%" : "0%") : (index % 2 === 1 ? "38%" : "0%")) ,
+            left: windowSize.width < 800 ? "-40%" : (windowSize.width < 1400 ? (index >= 2 ? "3%" : "39%") : (index >= 2 ? "3%" : "39%")),
             transition: { duration: 1, ease: easeInOut },
         }),
         // one card is spotlighted
         spotlight: (index) => ({
-            scale: selected === index ? 1 : 0.6,
-            top: "18%",
-            left: "21%",
+            scale: windowSize.width < 800 ? (selected === index && 0.5) : (windowSize.width < 1400 ? (selected === index && 1) : (selected === index && 1)) ,
+            top: windowSize.width < 800 ? "18%" : (windowSize.width < 1400 ? "18%" : "18%"),
+            left: windowSize.width < 800 ? "-40%" : (windowSize.width < 1400 ? "21%" : "21%"),
             rotate: 0,
             zIndex: 100, 
             transition: { duration: 0.8, ease: easeInOut },
         }),
         // from Spotlight 
         returnCard: (index) => ({
-            scale: 0.6,
-            top: index % 2 === 1 ? "38%" : "0%",
-            left: index >= 2 ? "3%" : "39%",
+            scale: windowSize.width < 800 ? 0.25 : (windowSize.width < 1400 ? 0.6 : 0.6),
+            top: windowSize.width < 800 ? `${-10 + (index * 16)}%` : (windowSize.width < 1400 ? (index % 2 === 1 ? "38%" : "0%") : (index % 2 === 1 ? "38%" : "0%")) ,
+            left: windowSize.width < 800 ? "-40%" : (windowSize.width < 1400 ? (index >= 2 ? "3%" : "39%") : (index >= 2 ? "3%" : "39%")),
             rotate: 0,
             zIndex: returningCard === index ? 100 : index, // Keep it on top until fully transitioned
             transition: { duration: 0.8, ease: easeInOut },
