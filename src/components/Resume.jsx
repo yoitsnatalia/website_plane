@@ -1,16 +1,19 @@
 // Resume as boarding pass
 
 import { motion, easeInOut } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import airplane from "../assets/airplane_icon.png"
 
-function Resume() {
-
+function Resume({ isDocOpen }) {
     const [isHovered, setIsHovered] = useState(false);
     // boarding pass is center of the screen
     const [isOpen, setIsOpen] = useState(false);
     // make sure no interactions are possible during animations
     const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+        setIsOpen(isDocOpen);
+    }, [isDocOpen]);
 
     const resumeVariants = {
         initial: { 

@@ -2,11 +2,11 @@
 
 import { motion, useAnimation, easeInOut } from "framer-motion";
 import seal from "../assets/seal.png"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import headshot from "../assets/headshot.png"
 
 
-function AboutMe() {
+function AboutMe({ isDocOpen }) {
     const [isOpen, setIsOpen] = useState(false);
     // prevent interactions during animations
     const [isAnimating, setIsAnimating] = useState(false);
@@ -16,6 +16,9 @@ function AboutMe() {
     const textControls = useAnimation();
     // handle animations for the passport id 
     const idControls = useAnimation();
+    const passRef = useRef(null);
+
+    
 
     const aboutVariants = {
         initial: { top: "85%", left: "40%",  transition: { ease: "easeInOut", duration: 1 } },
@@ -71,6 +74,12 @@ function AboutMe() {
 
         setIsAnimating(false);
     }
+
+    useEffect(() => {
+        if (isDocOpen) {
+            passRef.current.click();
+        }
+    }, [isDocOpen]);
     
     return (
         <>
@@ -97,6 +106,7 @@ function AboutMe() {
                         {/* Passport Cover */}
                         <motion.div
                             id="cover"
+                            ref={passRef}
                             variants={ aboutVariants }
                             className="absolute cursor-pointer border-blue-900 border-5 z-50 h-148 w-87 rounded-2xl text-amber-200 flex flex-col items-center justify-between p-15 bg-blue-950"
                             animate={ coverControls }

@@ -19,8 +19,13 @@ const navLinks = {
   }
 }
 
-function Nav(props) {
+function Nav({ setActiveDoc }) {
     const [navSelect, setNavSelect] = useState("");
+
+    const handleNavClick = (navOption) => { 
+      setNavSelect(navOption);
+      setActiveDoc(navOption); // Update the active component state
+    };
 
     // keep track of which nav option is active
     const getNavSelectClass = (navOption) => {
@@ -32,11 +37,18 @@ function Nav(props) {
           <ul className="text-center">
             {/* Nav Options */}
             {Object.keys(navOptions).map(option => (
-              <li className={getNavSelectClass(navOptions[option])} key={navOptions[option]} onClick={() => setNavSelect(navOptions[option])}>{option}</li>
+              <li className={getNavSelectClass(navOptions[option])} 
+                  key={navOptions[option]} 
+                  onClick={() => {handleNavClick(navOptions[option])}}> {option} </li>
             ))}
             {/* Nav External Links */}
             {Object.keys(navLinks).map(link => (
-              <li className="m-5 cursor-pointer text-cyan-100 hover:italic hover:underline" key={navLinks[link]['key']}><a href={navLinks[link]['url']} target="_blank" rel="noopener noreferrer">{navLinks[link]['name']}</a></li>
+              <li className="m-5 cursor-pointer text-cyan-100 hover:italic hover:underline" 
+                  key={navLinks[link]['key']}>
+                    <a href={navLinks[link]['url']} 
+                      target="_blank" 
+                      rel="noopener noreferrer"> {navLinks[link]['name']} </a>
+              </li>
             ))}
           </ul>
         </div>

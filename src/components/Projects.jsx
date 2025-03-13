@@ -1,12 +1,12 @@
 // Project gallery as postcards
 
 import { motion, easeInOut } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import projectInfo from "./ProjectInfo.jsx";
 import stamp from "../assets/stamp.png";
 
 
-function Projects() {
+function Projects({ isDocOpen }) {
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
     // spotlight -> a card is spotlighted
     const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -17,6 +17,10 @@ function Projects() {
     // for grouping cards animation for hover
     const [isHovered, setIsHovered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+        setIsGalleryOpen(isDocOpen);
+    }, [isDocOpen]);
 
     const pcVariants = {
         initial: (index) => ({
