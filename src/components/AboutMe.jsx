@@ -1,4 +1,4 @@
-// Bio as passport
+// About me as passport
 
 import { motion, useAnimation, easeInOut } from "framer-motion";
 import seal from "../assets/seal.png"
@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react"
 import headshot from "../assets/headshot.png"
 
 
-function AboutMe({ isDocOpen }) {
+function AboutMe({ isDocOpen, onClose }) {
     const [isOpen, setIsOpen] = useState(false);
     // prevent interactions during animations
     const [isAnimating, setIsAnimating] = useState(false);
@@ -17,8 +17,6 @@ function AboutMe({ isDocOpen }) {
     // handle animations for the passport id 
     const idControls = useAnimation();
     const passRef = useRef(null);
-
-    
 
     const aboutVariants = {
         initial: { top: "85%", left: "40%",  transition: { ease: "easeInOut", duration: 1 } },
@@ -73,9 +71,13 @@ function AboutMe({ isDocOpen }) {
         ]);
 
         setIsAnimating(false);
+        // notify about me button that passport is closing
+        onClose();
     }
 
+    // notify passport that about me button is clicked
     useEffect(() => {
+        // simulate clicking the passport
         if (isDocOpen) {
             passRef.current.click();
         }

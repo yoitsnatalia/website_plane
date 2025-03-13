@@ -6,7 +6,7 @@ import projectInfo from "./ProjectInfo.jsx";
 import stamp from "../assets/stamp.png";
 
 
-function Projects({ isDocOpen }) {
+function Projects({ isDocOpen, onClose }) {
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
     // spotlight -> a card is spotlighted
     const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -18,6 +18,7 @@ function Projects({ isDocOpen }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // notify projects that projects button is selected
     useEffect(() => {
         setIsGalleryOpen(isDocOpen);
     }, [isDocOpen]);
@@ -86,11 +87,15 @@ function Projects({ isDocOpen }) {
         if (isGalleryOpen) {
             setIsAnimating(true);
             setIsGalleryOpen(false);
+            
 
             // delay resetting `isAnimating` till Animation is done
             setTimeout(() => {
                 setIsAnimating(false);
-            }, 2000); 
+                // notify projects button that projects closing
+                onClose();
+            }, 1200);
+             
         }
     }
 

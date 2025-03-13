@@ -4,16 +4,22 @@ import { motion, easeInOut } from "framer-motion";
 import { useState, useEffect } from "react";
 import airplane from "../assets/airplane_icon.png"
 
-function Resume({ isDocOpen }) {
+function Resume({ isDocOpen, onClose }) {
     const [isHovered, setIsHovered] = useState(false);
     // boarding pass is center of the screen
     const [isOpen, setIsOpen] = useState(false);
     // make sure no interactions are possible during animations
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // open resume when resume button clicked
     useEffect(() => {
         setIsOpen(isDocOpen);
     }, [isDocOpen]);
+
+    // notify resume button when resume closed
+    useEffect(() => {
+        !isOpen && setTimeout(onClose, 700);
+    }, [isOpen])
 
     const resumeVariants = {
         initial: { 
@@ -27,6 +33,7 @@ function Resume({ isDocOpen }) {
             transition: { ease: easeInOut, duration: 0.6 },
         },
     };
+
     return (
         <>
             <div className={ `fixed flex inset-0 items-center justify-center ${ isOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49" }` }>
@@ -34,7 +41,9 @@ function Resume({ isDocOpen }) {
 
                     {/* Return button */}
                     <div className={ `absolute h-49 w-120 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto top-90/100 left-66/100 hover:bg-pink-100/30` }
-                        onClick={() => setIsOpen(false) } />
+                        onClick={() => {
+                            setIsOpen(false);
+                        }} />
 
                     {/* Boarding Pass */}
                     <motion.div
@@ -51,10 +60,11 @@ function Resume({ isDocOpen }) {
                             setIsAnimating(true);
                             setIsOpen(!isOpen);
                             isOpen && setIsHovered(false);
+                            
                             // delay resetting `isAnimating` till Animation is done
                             setTimeout(() => {
                                 setIsAnimating(false);
-                            }, 2000); 
+                            }, 700); 
                         }}
                         >
 
