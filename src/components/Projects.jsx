@@ -23,7 +23,7 @@ function Projects() {
             scale: isHovered ? 0.55 : 0.6,
             top: isHovered ? "83%" : "89%",
             left: "-10%",
-            rotate: isHovered ? `${index * -15 - 65}deg` : "-90deg",
+            rotate: isHovered ? `${ index * -15 - 65 }deg` : "-90deg",
             // open hover animation should be faster than leave hover and close gallery (return to initial)
             transition: isHovered ? { ease: "easeInOut", duration: 0.3 } : { ease: "easeInOut", duration: 1 },
         }),
@@ -57,6 +57,7 @@ function Projects() {
 
     // open gallery and spotlight functionality
     const handleClick = async (index) => {
+
         if (!isGalleryOpen) {
             setIsGalleryOpen(true);
         } else if (isGalleryOpen && !isSpotlightOpen) {
@@ -73,6 +74,7 @@ function Projects() {
                 setReturningCard(null);
             }, 800); // match transition duration
         } 
+
     };
 
     // close gallery
@@ -90,26 +92,23 @@ function Projects() {
 
     return (
         <>
-            {/* Full-screen overlay to prevent clicking outside */}
-            {/* {isGalleryOpen && ( <div className="fixed flex inset-0 z-40 pointer-events-auto"></div> )} */}
-
             {/* Set Container */}
-            <div className={`fixed flex inset-0 items-center justify-center ${isGalleryOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49"}`}>
+            <div className={ `fixed flex inset-0 items-center justify-center ${ isGalleryOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49" }` }>
                 <div className="w-screen h-screen">
                     
                     {/* Return button */}
                     <motion.div 
-                        variants={pcVariants}
+                        variants={ pcVariants }
                         initial="initial"
-                        animate={isGalleryOpen ? { opacity: 1 } : { opacity: 0 }}
+                        animate={ isGalleryOpen ? { opacity: 1 } : { opacity: 0 } }
                         className="absolute opacity-0 cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
-                        onClick={handleClose} 
+                        onClick={ handleClose } 
                         transition={ { ease: easeInOut, duration: 3} }
                     >
 
                         <div className="flex justify-end w-full h-full">
                             <img
-                                src={stamp}
+                                src={ stamp }
                                 alt="postage stamp"
                                 className="object-contain size-35 m-10 opacity-10"
                             />
@@ -121,9 +120,9 @@ function Projects() {
                     {[...Array(4)].map((_, index) => (
 
                         <motion.div
-                            key={index}
-                            custom={index}
-                            variants={pcVariants}
+                            key={ index }
+                            custom={ index }
+                            variants={ pcVariants }
                             initial="initial"
                             animate={
                                 isSpotlightOpen && selected === index
@@ -134,11 +133,11 @@ function Projects() {
                                 ? "open"
                                 : "initial"
                             }
-                            onHoverStart={() => {
-                        !isAnimating && setIsHovered(true);
-                    }} // Move all cards up slightly
-                            onHoverEnd={() => setIsHovered(false)} // Reset position when not hovering
-                            onClick={() => handleClick(index)}
+                            onHoverStart={ () => {
+                                !isAnimating && setIsHovered(true);
+                            }} // Move all cards up slightly
+                            onHoverEnd={ () => setIsHovered(false) } // Reset position when not hovering
+                            onClick={ () => handleClick(index) }
                             className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-7 border-[#AC9476] rounded-3xl bg-amber-50 pointer-events-auto"
                         >
                             
@@ -150,11 +149,11 @@ function Projects() {
 
                                     <div className="px-10 pt-10">
                                         <img
-                                            src={projectInfo[index].img}
-                                            alt={projectInfo[index].alt}
+                                            src={ projectInfo[index].img }
+                                            alt={ projectInfo[index].alt }
                                             className="object-contain border-2 border-[#c7b08c] rounded-lg "
                                         />
-                                        <p className="justify-self-center text-xl mt-5 mb-1">{projectInfo[index].tools}</p>
+                                        <p className="justify-self-center text-xl mt-5 mb-1">{ projectInfo[index].tools }</p>
                                     </div>
                                     
                                 </div>
@@ -164,21 +163,21 @@ function Projects() {
 
                                     <div className="flex justify-end mb-5">
                                         <img
-                                            src={stamp}
+                                            src={ stamp }
                                             alt="postage stamp"
                                             className="object-contain size-35"
                                         />
                                     </div>
-                                    <h1 className="text-6xl mb-4">{projectInfo[index].name}</h1>
+                                    <h1 className="text-6xl mb-4">{ projectInfo[index].name }</h1>
                                     <div className="flex flex-inline text-2xl mb-6 text-[#786f61]">
-                                        <p>{projectInfo[index].skills}</p>
+                                        <p>{ projectInfo[index].skills }</p>
                                         <p className="mx-3">|</p>
-                                        <h3>{projectInfo[index].where}</h3>
+                                        <h3>{ projectInfo[index].where }</h3>
                                         <p className="mx-3">|</p>
-                                        <h3>{projectInfo[index].date}</h3>
+                                        <h3>{ projectInfo[index].date }</h3>
                                     </div>
-                                    <p className="italic text-3xl text-amber-950">{projectInfo[index].description}</p>
-                                    <p className="mt-7 text-lg text-amber-950">{projectInfo[index].more}</p>
+                                    <p className="italic text-3xl text-amber-950">{ projectInfo[index].description }</p>
+                                    <p className="mt-7 text-lg text-amber-950">{ projectInfo[index].more }</p>
 
                                 </div>
 

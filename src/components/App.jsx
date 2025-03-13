@@ -6,15 +6,12 @@ import Projects from "./Projects.jsx"
 
 // PROJECTS
 // ABOUT ME
-// how to close the passport? rn not intuitive 
 // add drop shadow
-// change x and y to top and left
 // RESUME
 // add drop shadow and border?
 // resume qr code
 // OVERALL
 // connect nav with components
-// make sure all docs stick to bottom of page when resizing
 // adjust scale of docs and text with resizing (maybe make docs a stack when screen is small)
 
 function App() {
