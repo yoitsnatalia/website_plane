@@ -12,8 +12,8 @@ function AboutMe() {
     const idControls = useAnimation();
 
     const aboutVariants = {
-        initial: { y: "110%", transition: { ease: "easeInOut", duration: 1} },
-        hover: { y: "90%", transition: { ease: "easeInOut", duration: 1} },
+        initial: { top: "85%", left: "40%",  transition: { ease: "easeInOut", duration: 1} },
+        hover: { top: "75%", left: "40%", transition: { ease: "easeInOut", duration: 0.3} },
     };
 
     const handleOpen = async () => {
@@ -73,7 +73,7 @@ function AboutMe() {
                         variants={ aboutVariants } 
                         initial="initial"
                         animate={ isOpen ? { opacity: 1, zIndex: 1, transition: { ease: easeInOut } } : { opacity: 0, transition: { ease: easeInOut, duration: 1.5} }}
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer shadow-xl shadow-[#241C37]/90 h-148 w-87 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
+                        className="absolute cursor-pointer shadow-xl shadow-[#241C37]/90 h-148 w-87 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
                         onClick={ handleClose } 
                     >
 
@@ -85,7 +85,7 @@ function AboutMe() {
                         variants={aboutVariants}
                         initial="initial"
                         whileHover={!isOpen && !isAnimating && "hover"}
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+                        className="absolute pointer-events-auto">
 
                         {/* Passport Cover */}
                         <motion.div
