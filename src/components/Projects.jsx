@@ -17,12 +17,13 @@ function Projects({ isDocOpen, onClose }) {
     // for grouping cards animation for hover
     const [isHovered, setIsHovered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
-
+    // get window size for resizing
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
 
+    // handle resizing
     useEffect(() => {
         const handleResize = () => {
             setWindowSize({
@@ -40,7 +41,7 @@ function Projects({ isDocOpen, onClose }) {
         setIsGalleryOpen(isDocOpen);
     }, [isDocOpen]);
 
-    const pcVariants = {
+    const variants = {
         initial: (index) => ({
             scale: windowSize.width < 800 ? (isHovered ? 0.44 : 0.5) : (windowSize.width < 1400 ? (isHovered ? 0.55 : 0.6) : (isHovered ? 0.55 : 0.6)),
             top: windowSize.width < 800 ? (isHovered ? "83%" : "86%") : (windowSize.width < 1400 ? (isHovered ? "83%" : "89%") : (isHovered ? "83%" : "89%")) ,
@@ -104,7 +105,6 @@ function Projects({ isDocOpen, onClose }) {
         if (isGalleryOpen) {
             setIsAnimating(true);
             setIsGalleryOpen(false);
-            
 
             // delay resetting `isAnimating` till Animation is done
             setTimeout(() => {
@@ -124,7 +124,7 @@ function Projects({ isDocOpen, onClose }) {
                     
                     {/* Return button */}
                     <motion.div 
-                        variants={ pcVariants }
+                        variants={ variants }
                         initial="initial"
                         animate={ isGalleryOpen ? { opacity: 1 } : { opacity: 0 } }
                         className="absolute opacity-0 cursor-pointer shadow-xl shadow-[#241C37]/90 h-150 w-250 origin-center border-3 border-white/70 rounded-3xl bg-black/10 border-dashed pointer-events-auto hover:bg-amber-50/30"
@@ -148,7 +148,7 @@ function Projects({ isDocOpen, onClose }) {
                         <motion.div
                             key={ index }
                             custom={ index }
-                            variants={ pcVariants }
+                            variants={ variants }
                             initial="initial"
                             animate={
                                 isSpotlightOpen && selected === index
