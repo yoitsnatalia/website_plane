@@ -6,13 +6,6 @@ import AboutMe from "./AboutMe.jsx"
 import Projects from "./Projects.jsx"
 import React from "react";
 
-// PROJECTS
-// ABOUT ME
-// RESUME
-// resume qr code
-// OVERALL
-// adjust scale of docs and text with resizing (maybe make docs a stack when screen is small)
-
 function App() {
   const [activeDoc, setActiveDoc] = useState(null);
 
