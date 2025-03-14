@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <div className="flex relative w-screen h-screen justify-center font-instrument overflow-hidden bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${background})` }}>
+            style={{ backgroundImage: `url(${ background })` }}>
 
         <h1 className="flex absolute m-15 z-1 text-5xl text-orange-100 italic">Natalia Linn</h1>
         <Nav activeDoc={ activeDoc } setActiveDoc={ setActiveDoc }/>
