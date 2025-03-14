@@ -10,12 +10,13 @@ function Resume({ isDocOpen, onClose }) {
     const [isOpen, setIsOpen] = useState(false);
     // make sure no interactions are possible during animations
     const [isAnimating, setIsAnimating] = useState(false);
-
+    // get window size for resizing
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
 
+    // handle resizing
     useEffect(() => {
         const handleResize = () => {
             setWindowSize({
@@ -38,7 +39,7 @@ function Resume({ isDocOpen, onClose }) {
         !isOpen && setTimeout(onClose, 700);
     }, [isOpen])
 
-    const resumeVariants = {
+    const variants = {
         initial: { 
             left: windowSize.width < 800 ? "9%" : (windowSize.width < 1400 ? "30%" : "66%"), 
             top: windowSize.width < 1400 ? (isHovered ? "70%" : "74%") : (isHovered ? "86%" : "90%"),
@@ -58,26 +59,32 @@ function Resume({ isDocOpen, onClose }) {
                 <div className="w-screen h-screen">
 
                     {/* Return button */}
-                    {/* top-90/100 left-66/100 */}
                     <motion.div 
                         className={ `absolute h-159 w-120 opacity-0 cursor-pointer shadow-xl shadow-[#241C37]/90 rounded-3xl bg-black/10 border-3 border-white/70 border-dashed pointer-events-auto hover:bg-pink-100/30` }
-                        variants= { resumeVariants }
+                        variants= { variants }
                         animate={ isOpen ? { opacity: 1, zIndex: 1, transition: { ease: easeInOut } } : { opacity: 0, transition: { ease: easeInOut, duration: 1.5 } } }
                         initial="initial"
                         onClick={() => {
-                            setIsOpen(false);
+                            setIsAnimating(true);
+                            setIsOpen(!isOpen);
+                            isOpen && setIsHovered(false);
+                            
+                            // delay resetting `isAnimating` till Animation is done
+                            setTimeout(() => {
+                                setIsAnimating(false);
+                            }, 700); 
                         }} />
 
                     {/* Boarding Pass */}
                     <motion.div
-                        variants={ resumeVariants }
+                        variants={ variants }
                         initial="initial"
                         onHoverStart={ () => {
                             !isAnimating && setIsHovered(true);
                         }} 
                         onHoverEnd={ () => setIsHovered(false) } // Reset position when not hovering
                         transition={ { ease: easeInOut, duration: 1 } }
-                        animate={ isOpen ? "open" : "initial" }
+                        animate={ () => isOpen ? "open" : "initial" }
                         className="absolute pointer-events-auto h-159 w-123 cursor-pointer text-black"
                         onClick={ () => {
                             setIsAnimating(true);
@@ -144,7 +151,6 @@ function Resume({ isDocOpen, onClose }) {
                         </motion.div>
 
                     </motion.div> 
-
                 </div> 
             </div> 
         </>
