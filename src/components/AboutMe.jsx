@@ -16,7 +16,6 @@ function AboutMe({ isDocOpen, onClose }) {
     const textControls = useAnimation();
     // handle animations for the passport id 
     const idControls = useAnimation();
-    const passRef = useRef(null);
 
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
@@ -102,9 +101,8 @@ function AboutMe({ isDocOpen, onClose }) {
 
     // notify passport that about me button is clicked
     useEffect(() => {
-        // simulate clicking the passport
         if (isDocOpen) {
-            passRef.current.click();
+            handleOpen();
         }
     }, [isDocOpen]);
     
@@ -133,7 +131,6 @@ function AboutMe({ isDocOpen, onClose }) {
                         {/* Passport Cover */}
                         <motion.div
                             id="cover"
-                            ref={passRef}
                             variants={ aboutVariants }
                             className="absolute cursor-pointer border-blue-900 border-5 z-50 h-148 w-87 rounded-2xl text-amber-200 flex flex-col items-center justify-between p-15 bg-blue-950"
                             animate={ coverControls }
