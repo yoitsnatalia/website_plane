@@ -144,7 +144,7 @@ function AboutMe({ isDocOpen, onClose }) {
                         onClick={ !isOpen ? handleOpen : handleClose }
                         >
 
-                            <motion.h1 animate={ textControls } className="text-5xl">PASSPORT</motion.h1>
+                            <motion.h1 animate={ textControls } className="text-5xl">ABOUT ME</motion.h1>
                             <motion.img
                                 src={ seal }
                                 alt="seal icon"

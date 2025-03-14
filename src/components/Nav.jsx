@@ -1,8 +1,8 @@
 // Navigation menu
 
 const navOptions = {
-  "About Me": "about_me",
   "Projects": "projects",
+  "About Me": "about_me",
   "Resume": "resume",
 };
 
