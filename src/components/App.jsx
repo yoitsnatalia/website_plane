@@ -7,7 +7,6 @@ import Projects from "./Projects.jsx"
 import Chime from "./Chime.jsx"
 import React from "react";
 
-// testing rename
 function App() {
   const [activeDoc, setActiveDoc] = useState(null);
 
