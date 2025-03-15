@@ -3,6 +3,7 @@
 import { motion, easeInOut } from "framer-motion";
 import { useState, useEffect } from "react";
 import airplane from "../assets/airplane_icon.png"
+import qr from "../assets/qr.png"
 
 function Resume({ isDocOpen, onClose }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -156,6 +157,13 @@ function Resume({ isDocOpen, onClose }) {
                                     <p className="text-sm pt-8">SEAT</p>
                                     <h3 className="text-3xl">16A</h3>
                                 </div>
+                            </div>
+                            <div className="flex justify-center mt-10">
+                                <img
+                                        src={ qr }
+                                        alt="airplane icon"
+                                        className="size-70 self-cente border-3 border-black rounded-2xl"
+                                    />
                             </div>
 
                         </motion.div>
