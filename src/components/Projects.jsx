@@ -120,8 +120,7 @@ function Projects({ isDocOpen, onClose }) {
         <>
             {/* Set Container */}
             <div className={ `fixed flex inset-0 items-center justify-center ${ isGalleryOpen ? "pointer-events-auto z-50" : "pointer-events-none z-49" }` }>
-                <div className="w-screen h-screen"
-                onClick={ handleClose }>
+                <div className="w-screen h-screen">
                     
                     {/* Return button */}
                     <motion.div 

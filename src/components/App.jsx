@@ -4,6 +4,7 @@ import Nav from "./Nav.jsx";
 import Resume from "./Resume.jsx"
 import AboutMe from "./AboutMe.jsx"
 import Projects from "./Projects.jsx"
+import Chime from "./Chime.jsx"
 import React from "react";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <Resume isDocOpen={ activeDoc === "resume" } onClose={ handleDocClose } />
         <AboutMe isDocOpen={ activeDoc === "about_me" } onClose={ handleDocClose } />
         <Projects isDocOpen={ activeDoc === "projects" } onClose={ handleDocClose } />
-
+        <Chime />
       </div>
     </>
   )
